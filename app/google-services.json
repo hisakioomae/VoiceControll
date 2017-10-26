@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "941321415123",
+    "firebase_url": "https://voicecontroll-708aa.firebaseio.com",
+    "project_id": "voicecontroll-708aa",
+    "storage_bucket": "voicecontroll-708aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941321415123:android:3603fe227d2f9895",
+        "android_client_info": {
+          "package_name": "com.b5.voicecontroll"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941321415123-9vg3pf4o4nt1f5a1ascrtetv3ied2ks0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTLUWoptTCcxRdukvP4MhJHonaufhUlRk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -39,11 +39,26 @@
 
 # 開発
 ## コード規約
+|対象|規約|例|
+|:-----------:|:------------:|:------------:|
+|class名|CamelCase|MainActivity|
+|変数|lowCamelCase|textView|
+|view id|snake_case|thumbnail_image|
+|string resource id|snake_case|app_name|
+|Drawable|snake_case|white_arrow|
+|style|lowCamelCase|colorAccent|
 ## 使用言語
 - Java
 ## 使用ライブラリ
 ## パッケージ構成
-
+- model: データに関するパッケージ  
+	- entity: データの型に関するパッケージ  
+	- network: 通信部分に関するパッケージ
+- presenters: viewまたはcontrollerに関するパッケージ
+	- activity: activityに入れるパッケージ
+	- fragment: fragmentを入れるパッケージ
+	- adapter: adapter類を入れるパッケージ
+- view: customviewに関するパッケージ
 
 
 

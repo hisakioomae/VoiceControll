@@ -14,6 +14,8 @@
 - Slack
 - DeployGate
 
+![default](https://user-images.githubusercontent.com/19780079/32055663-66a6d55e-ba9d-11e7-8b9a-8e2712a88ce9.png)
+
 # DB設計
 未設計
 

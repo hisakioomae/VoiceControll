@@ -48,8 +48,9 @@
 |Drawable|snake_case|white_arrow|
 |style|lowCamelCase|colorAccent|
 ## 使用言語
-- Java
+Java
 ## 使用ライブラリ
+未定
 ## パッケージ構成
 - model: データに関するパッケージ  
 	- entity: データの型に関するパッケージ  
@@ -58,7 +59,7 @@
 	- activity: activityに入れるパッケージ
 	- fragment: fragmentを入れるパッケージ
 	- adapter: adapter類を入れるパッケージ
-- view: customviewに関するパッケージ
+- view: CustomViewに関するパッケージ
 
 
 

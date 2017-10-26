@@ -1,3 +1,37 @@
+machine:
+  pre:
+    # デバッグ用に情報を出力
+    - env
+    - pwd
+    - ls
+
+# チェックアウト関連
+checkout:
+  post:
+    - echo CheckoutPost
+    - git submodule sync
+    - git submodule update --init
+
+# 依存関係解決
+dependencies:
+  pre:
+    # ライセンスへの同意
+    - echo y | android update sdk --no-ui --all --filter "tools,build-tools-25.0.2,platform-tools,android-25,extra-android-m2repository"
+    - mkdir -p $ANDROID_HOME/licenses
+    # ローカル開発環境で同意した情報を使用する
+    # OSXの場合このファイルは`~/Library/Android/sdk/licenses/android-sdk-license`
+    - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > ${ANDROID_HOME}/licenses/android-sdk-license
+
+  override:
+      - ./gradlew dependencies || true
+
+# テスト実行
 test:
   override:
+    - ./gradlew test
+
+# コンパイル
+compile:
+  override:
     - ./gradlew assembleDebug
+    - cp -r app/build/outputs $CIRCLE_ARTIFACTS

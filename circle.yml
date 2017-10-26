@@ -16,7 +16,7 @@ checkout:
 dependencies:
   pre:
     # ライセンスへの同意
-    - echo y | android update sdk --no-ui --all --filter "tools,build-tools-25.0.2,platform-tools,android-25,extra-android-m2repository"
+    - echo y | android update sdk --no-ui --all --filter "tools,build-tools-26.0.2,platform-tools,android-26,extra-android-m2repository"
     - mkdir -p $ANDROID_HOME/licenses
     # ローカル開発環境で同意した情報を使用する
     # OSXの場合このファイルは`~/Library/Android/sdk/licenses/android-sdk-license`

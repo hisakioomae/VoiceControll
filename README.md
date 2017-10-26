@@ -8,11 +8,16 @@
     - Auth
     - Database
 
+<img width="485" src="https://user-images.githubusercontent.com/19780079/32055890-0d384dee-ba9e-11e7-8360-f0733a87be79.png">
+
+
 # 開発環境
 - GitHub
 - Circle CI
 - Slack
 - DeployGate
+
+![default](https://user-images.githubusercontent.com/19780079/32055663-66a6d55e-ba9d-11e7-8b9a-8e2712a88ce9.png)
 
 # DB設計
 未設計

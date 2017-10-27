@@ -36,6 +36,7 @@ compile:
     - ./gradlew assembleDebug
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
 
+
 # デプロイ用
 deployment:
   master:

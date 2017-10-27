@@ -36,4 +36,4 @@ deployment:
     branch: master
     commands:
       - ./gradlew assembleRelease
-      - curl -F "token=${DEPLOY_GATE_API_KEY}" -F "file=@app/release/app-release.apk" -F "message=sample" https://deploygate.com/api/users/b5androidgroup/apps
+      - curl -F "token=${DEPLOY_GATE_API_KEY}" -F "file=@app/release/app-release.apk" -F "message=ぶしも！" https://deploygate.com/api/users/b5androidgroup/apps

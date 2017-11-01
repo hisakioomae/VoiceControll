@@ -22,11 +22,8 @@
 # DB設計
 未設計
 
-# 画面遷移図
-未提案
-
-# 画面設計図
-未設計
+# 画面設計図および画面遷移図
+![default](https://user-images.githubusercontent.com/27988834/32269450-baa13a86-bf35-11e7-899f-ec0219133e73.PNG)
 
 # 担当
 - 大前

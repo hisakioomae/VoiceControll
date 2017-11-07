@@ -28,6 +28,7 @@ dependencies:
 # テスト実行
 test:
   override:
+    - chmod +x gradlew
     - ./gradlew test
 
 # デプロイ用

@@ -40,4 +40,4 @@ dependencies {
     // implementation 'com.google.firebase:firebase-database:11.4.2'
 }
 
-apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'com.google.gms.google-services'

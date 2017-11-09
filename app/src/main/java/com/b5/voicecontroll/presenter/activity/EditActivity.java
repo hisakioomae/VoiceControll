@@ -20,8 +20,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void startState(View view) {
-        Intent ssIntent = new Intent(this, MainActivity.class);
-        startActivity(ssIntent);
+        onBackPressed();
     }
 
     public void decideTimes(View view) {

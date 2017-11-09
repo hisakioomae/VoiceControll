@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">VoiceControll</string>
+    <string name="cancel_text">キャンセル</string>
+    <string name="save_text">保存</string>
+    <string name="delete_text">消去</string>
+    <string name="edit_text">編集</string>
+    <string name="days_text">曜日の指定</string>
+    <string name="time_text">時間の指定</string>
+    <string name="first_menu">消音時間</string>
 </resources>

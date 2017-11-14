@@ -7,4 +7,6 @@
     <string name="days_text">曜日の指定</string>
     <string name="time_text">時間の指定</string>
     <string name="first_menu">消音時間</string>
+    <string name="time_init">00 : 00</string>
+    <string name="time_to">～</string>
 </resources>

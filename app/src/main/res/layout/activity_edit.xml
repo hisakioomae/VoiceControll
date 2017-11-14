@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="0dp"
@@ -36,48 +35,62 @@
             android:layout_weight="1"
             android:onClick="startState"
             android:text="@string/cancel_text" />
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="@string/time_text"
+        android:textSize="@dimen/text_size_normal" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <TextView
-            android:id="@+id/time_decision"
+            android:id="@+id/start_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="@string/time_text"
+            android:onClick="decideStartTimes"
+            android:text="@string/time_init"
             android:textSize="@dimen/text_size_normal" />
 
-        <Space
-            android:id="@+id/space_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-
-        <Button
-            android:id="@+id/time_button"
+        <TextView
+            android:id="@+id/s_to_e"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="decideTimes"
-            android:text="@string/edit_text" />
+            android:gravity="center_horizontal"
+            android:text="@string/time_to" />
+
+
+        <TextView
+            android:id="@+id/end_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:onClick="decideEndTimes"
+            android:text="@string/time_init"
+            android:textSize="@dimen/text_size_normal" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="7"
+        android:layout_weight="3"
         android:orientation="horizontal"
         android:weightSum="3">
-
 
         <TextView
             android:id="@+id/days_decision"
@@ -94,14 +107,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-
         <Button
             android:id="@+id/days_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/edit_text" />
+
     </LinearLayout>
 
-
 </LinearLayout>
+

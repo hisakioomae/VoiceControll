@@ -9,11 +9,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import java.util.Locale;
 import com.b5.voicecontroll.R;
-
 import java.util.Calendar;
 
 public class EditActivity extends AppCompatActivity {
-    private String startTime = "startTime";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +23,7 @@ public class EditActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    public void decideTimes(View view) {
+    public void decideStartTimes(View view) {
         // 現在時刻を取得
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -38,24 +36,46 @@ public class EditActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view,
                                           int hourOfDay, int minute) {// 設定 ボタンクリック時の処理
                         // 時と分を文字列として結合
-                        String timeStr = String.format(Locale.US, "%d:%d", hourOfDay, minute);
+                        String timeStr = String.format(Locale.US, "%d : %d", hourOfDay, minute);
 
-                        // 紐づけ
-                        TextView setTime = (TextView)findViewById(R.id.time_decision); //
+                        // "%d : %d"をxmlのstart_timeに格納
+                        TextView setTime = findViewById(R.id.start_time);
                         setTime.setText(timeStr);
                     }
                 },
                 hour,
                 minute,
                 true);
-
         // 表示
         timepick.show();
 
+    }
 
+    public void decideEndTimes(View view) {
+        // 現在時刻を取得
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
 
+        // 時間選択ダイアログの生成
+        TimePickerDialog timepick = new TimePickerDialog(
+                this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    public void onTimeSet(TimePicker view,
+                                          int hourOfDay, int minute) {// 設定 ボタンクリック時の処理
+                        // 時と分を文字列として結合
+                        String timeStr = String.format(Locale.US, "%d : %d", hourOfDay, minute);
+
+                        // "%d : %d"をxmlのend_timeに格納
+                        TextView setTime = findViewById(R.id.end_time);
+                        setTime.setText(timeStr);
+                    }
+                },
+                hour,
+                minute,
+                true);
+        // 表示
+        timepick.show();
 
     }
 }
-
-

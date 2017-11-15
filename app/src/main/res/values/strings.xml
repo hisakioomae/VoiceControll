@@ -11,4 +11,19 @@
     <string name="first_menu">消音時間</string>
     <string name="time_init">＿時＿分</string>
     <string name="time_to">～</string>
+    <string-array name="days_list">
+        <item>しない</item>
+        <item>日曜日</item>
+        <item>月曜日</item>
+        <item>火曜日</item>
+        <item>水曜日</item>
+        <item>木曜日</item>
+        <item>金曜日</item>
+        <item>土曜日</item>
+    </string-array>
+    <string-array name="repeat_list">
+        <item>しない</item>
+        <item>する</item>
+    </string-array>
+
 </resources>

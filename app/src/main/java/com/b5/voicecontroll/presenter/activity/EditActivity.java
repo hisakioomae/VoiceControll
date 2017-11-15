@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
 import java.util.Locale;
+
 import com.b5.voicecontroll.R;
+
 import java.util.Calendar;
 
 public class EditActivity extends AppCompatActivity {
@@ -35,12 +38,17 @@ public class EditActivity extends AppCompatActivity {
                 new TimePickerDialog.OnTimeSetListener() {
                     public void onTimeSet(TimePicker view,
                                           int hourOfDay, int minute) {// 設定 ボタンクリック時の処理
-                        // 時と分を文字列として結合
-                        String timeStr = String.format(Locale.US, "%d : %d", hourOfDay, minute);
-
-                        // "%d : %d"をxmlのstart_timeに格納
-                        TextView setTime = findViewById(R.id.start_time);
-                        setTime.setText(timeStr);
+                        if (minute < 10) {
+                            // 時と分を文字列として結合
+                            String timeStr = String.format(Locale.US, "%d時 0%d分", hourOfDay, minute);
+                            // "%d : %d"をxmlのstart_timeに格納
+                            TextView setTime = findViewById(R.id.start_time);
+                            setTime.setText(timeStr);
+                        } else {
+                            String timeStr = String.format(Locale.US, "%d時 %d分", hourOfDay, minute);
+                            TextView setTime = findViewById(R.id.start_time);
+                            setTime.setText(timeStr);
+                        }
                     }
                 },
                 hour,
@@ -63,12 +71,17 @@ public class EditActivity extends AppCompatActivity {
                 new TimePickerDialog.OnTimeSetListener() {
                     public void onTimeSet(TimePicker view,
                                           int hourOfDay, int minute) {// 設定 ボタンクリック時の処理
-                        // 時と分を文字列として結合
-                        String timeStr = String.format(Locale.US, "%d : %d", hourOfDay, minute);
-
-                        // "%d : %d"をxmlのend_timeに格納
-                        TextView setTime = findViewById(R.id.end_time);
-                        setTime.setText(timeStr);
+                        if (minute < 10) {
+                            // 時と分を文字列として結合
+                            String timeStr = String.format(Locale.US, "%d時 0%d分", hourOfDay, minute);
+                            // "%d : %d"をxmlのend_timeに格納
+                            TextView setTime = findViewById(R.id.end_time);
+                            setTime.setText(timeStr);
+                        } else {
+                            String timeStr = String.format(Locale.US, "%d時 %d分", hourOfDay, minute);
+                            TextView setTime = findViewById(R.id.end_time);
+                            setTime.setText(timeStr);
+                        }
                     }
                 },
                 hour,

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="9"
+    android:weightSum="6"
     tools:context="com.b5.voicecontroll.presenter.activity.EditActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:orientation="horizontal"
         android:weightSum="3">
 
@@ -38,14 +38,16 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/time_text"
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_weight="0"
+        android:background="@android:color/darker_gray"/>
+
+    <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:gravity="center"
-        android:text="@string/time_text"
-        android:textSize="@dimen/text_size_normal" />
+        android:layout_weight="0.5"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,10 +87,21 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_weight="0"
+        android:background="@android:color/darker_gray"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:layout_weight="0.5"
         android:orientation="horizontal"
         android:weightSum="3">
 
@@ -107,14 +120,71 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <Button
+        <TextView
             android:id="@+id/days_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/edit_text" />
+            android:gravity="center_horizontal"
+            android:text="@string/days_button"
+            android:textSize="@dimen/text_size_normal" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_weight="0"
+        android:background="@android:color/darker_gray"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/repeat_decision"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/repeat_text"
+            android:textSize="@dimen/text_size_normal" />
+
+        <Space
+            android:id="@+id/space_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/repeat_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/days_button"
+            android:textSize="@dimen/text_size_normal" />
+
+        </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_weight="0"
+        android:background="@android:color/darker_gray"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"/>
 
 </LinearLayout>
 

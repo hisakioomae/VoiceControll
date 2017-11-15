@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="9"
-    tools:context="com.b5.voicecontroll.presenter.activity.editActivity">
+    tools:context="com.b5.voicecontroll.presenter.activity.EditActivity">
 
 
     <LinearLayout
@@ -16,96 +16,105 @@
         android:weightSum="3">
 
         <Button
-            android:id="@+id/saveButton"
+            android:id="@+id/save_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="保存" />
+            android:text="@string/save_text" />
 
-        <TextView
-            android:id="@+id/space"
+        <Space
+            android:id="@+id/space_0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="　　　　"
-            android:textSize="21sp" />
-
+            android:layout_weight="1" />
 
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/cancel_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="startState"
-            android:text="キャンセル" />
+            android:text="@string/cancel_text" />
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="@string/time_text"
+        android:textSize="@dimen/text_size_normal" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <TextView
-            android:id="@+id/timeDecision"
+            android:id="@+id/start_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="　時間の指定"
-            android:textSize="21sp" />
+            android:gravity="center_horizontal"
+            android:onClick="decideStartTimes"
+            android:text="@string/time_init"
+            android:textSize="@dimen/text_size_normal" />
 
         <TextView
-            android:id="@+id/spac"
+            android:id="@+id/s_to_e"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="　　　　"
-            android:textSize="21sp" />
+            android:gravity="center_horizontal"
+            android:text="@string/time_to" />
 
 
-        <Button
-            android:id="@+id/timeEditButton"
+        <TextView
+            android:id="@+id/end_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="DecideTimes"
-            android:text="編集" />
+            android:gravity="center_horizontal"
+            android:onClick="decideEndTimes"
+            android:text="@string/time_init"
+            android:textSize="@dimen/text_size_normal" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="7"
+        android:layout_weight="3"
         android:orientation="horizontal"
         android:weightSum="3">
 
-
         <TextView
-            android:id="@+id/sp"
+            android:id="@+id/days_decision"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="　曜日の指定"
-            android:textSize="21sp" />
+            android:gravity="center_horizontal"
+            android:text="@string/days_text"
+            android:textSize="@dimen/text_size_normal" />
 
-        <TextView
-            android:id="@+id/spa"
+        <Space
+            android:id="@+id/space_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="　　　　"
-            android:textSize="21sp" />
-
+            android:layout_weight="1" />
 
         <Button
-            android:id="@+id/daysEditButton"
+            android:id="@+id/days_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="編集" />
-    </LinearLayout>
+            android:text="@string/edit_text" />
 
+    </LinearLayout>
 
 </LinearLayout>
+

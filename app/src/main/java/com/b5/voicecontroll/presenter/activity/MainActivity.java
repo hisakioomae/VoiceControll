@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void timeEdit(View view){
-        Intent teIntent = new Intent(this, editActivity.class);
+        Intent teIntent = new Intent(this, EditActivity.class);
         startActivity(teIntent);
     }
 }

@@ -6,7 +6,24 @@
     <string name="edit_text">編集</string>
     <string name="days_text">曜日の指定</string>
     <string name="time_text">時間の指定</string>
+    <string name="days_button">なし</string>
+    <string name="repeat_text">繰り返し</string>
     <string name="first_menu">消音時間</string>
-    <string name="time_init">00 : 00</string>
+    <string name="time_init">＿時＿分</string>
     <string name="time_to">～</string>
+    <string-array name="days_list">
+        <item>しない</item>
+        <item>日曜日</item>
+        <item>月曜日</item>
+        <item>火曜日</item>
+        <item>水曜日</item>
+        <item>木曜日</item>
+        <item>金曜日</item>
+        <item>土曜日</item>
+    </string-array>
+    <string-array name="repeat_list">
+        <item>しない</item>
+        <item>する</item>
+    </string-array>
+
 </resources>

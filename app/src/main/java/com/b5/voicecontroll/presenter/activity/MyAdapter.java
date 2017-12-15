@@ -2,7 +2,6 @@ package com.b5.voicecontroll.presenter.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.renderscript.Sampler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,7 +12,7 @@ import com.b5.voicecontroll.R;
 import java.util.ArrayList;
 
 public class MyAdapter extends BaseAdapter{
-    private Context context = null;
+    private Context context;
     private ArrayList<ListItem> data = new ArrayList<>();
     private int resource = 0;
 

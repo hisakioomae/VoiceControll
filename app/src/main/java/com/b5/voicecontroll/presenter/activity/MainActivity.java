@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case (REQUEST_CODE):
                 if (resultCode == RESULT_OK) {
-                    // 保存ボタンを押して戻ってききたときの処理
-
                     //timeBoxにEditActivityから受け取った配列を格納
                     int timeBox[] = intent.getIntArrayExtra("return_times");
                     // 配列の内容をListItemオブジェクトに詰め替え
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 }
         }
     }
-
 
     public void timeEdit(View view) {
         Intent intent = new Intent(this, EditActivity.class);

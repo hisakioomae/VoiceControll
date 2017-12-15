@@ -1,4 +1,4 @@
-package com.b5.voicecontroll.presenter.activity;
+package com.b5.voicecontroll.presenter.activity.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.b5.voicecontroll.R;
+import com.b5.voicecontroll.presenter.entity.ListItem;
 
 import java.util.ArrayList;
 

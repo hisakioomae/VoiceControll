@@ -1,4 +1,4 @@
-package com.b5.voicecontroll.presenter.activity;
+package com.b5.voicecontroll.presenter.entity;
 
 public class ListItem {
     private long id = 0;

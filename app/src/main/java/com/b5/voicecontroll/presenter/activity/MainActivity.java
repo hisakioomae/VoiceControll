@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.b5.voicecontroll.R;
+import com.b5.voicecontroll.presenter.activity.adapter.MyAdapter;
+import com.b5.voicecontroll.presenter.entity.ListItem;
 
 import java.util.ArrayList;
 import java.util.Random;

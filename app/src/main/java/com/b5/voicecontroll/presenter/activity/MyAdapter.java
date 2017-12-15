@@ -11,15 +11,13 @@ import com.b5.voicecontroll.R;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends BaseAdapter{
+public class MyAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<ListItem> data = new ArrayList<>();
-    private int resource = 0;
 
-    public MyAdapter(Context context, ArrayList<ListItem> data, int resource) {
+    public MyAdapter(Context context, ArrayList<ListItem> data) {
         this.context = context;
         this.data = data;
-        this.resource = resource;
     }
 
     @Override
@@ -45,12 +43,17 @@ public class MyAdapter extends BaseAdapter{
             convertView = activity.getLayoutInflater()
                     .inflate(R.layout.list_item, null);
         }
-        ((TextView)convertView.findViewById(R.id.setting_times)).setText(String.valueOf(item.getTimes()));
+        ((TextView) convertView.findViewById(R.id.setting_times)).setText(String.valueOf(item.getTimes()));
 
         return convertView;
     }
 
-    public void setData(ListItem data){
+    /**
+     * 設定時間保存時にListViewの更新
+     *
+     * @param data ListItem型の新たに追加した設定時間
+     */
+    public void setData(ListItem data) {
         this.data.add(data);
         notifyDataSetChanged();
     }

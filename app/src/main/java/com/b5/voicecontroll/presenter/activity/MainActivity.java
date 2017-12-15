@@ -21,11 +21,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println("onCreate");
-
-        // ListItem配列とmainレイアウトを関連付け
         ArrayList<ListItem> data = new ArrayList<>();
-        adapter = new MyAdapter(this, data, R.layout.list_item);
+        adapter = new MyAdapter(this, data);
         ListView list = findViewById(R.id.list_view);
         list.setAdapter(adapter);
     }
@@ -43,13 +40,17 @@ public class MainActivity extends AppCompatActivity {
                     item.setId((new Random()).nextLong());
                     item.setTimes(timeBox);
                     data.add(item);
-
-                    // ListItem配列とmainレイアウトを関連付け
                     adapter.setData(item);
+                    break;
                 }
         }
     }
 
+    /**
+     * 編集ボタンタップでEditActivityに遷移
+     *
+     * @param view activity_main.xml
+     */
     public void timeEdit(View view) {
         Intent intent = new Intent(this, EditActivity.class);
         startActivityForResult(intent, REQUEST_CODE);

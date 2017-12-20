@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -109,7 +110,13 @@ public class EditActivity extends AppCompatActivity {
     @OnClick(R.id.save_button)
     public void returnSettingTime(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+
+        //days_spinnerオブジェクトから選択アイテムの取得
+        Spinner spinner = findViewById(R.id.days_spinner);
+        String item = (String)spinner.getSelectedItem();
+
         intent.putExtra("return_times", timeBox);
+        intent.putExtra("chosen_day", item);
         setResult(RESULT_OK, intent);
         finish();
     }

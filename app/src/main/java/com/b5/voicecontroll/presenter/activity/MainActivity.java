@@ -34,13 +34,15 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case (REQUEST_CODE):
                 if (resultCode == RESULT_OK) {
-                    //timeBoxにEditActivityから受け取った配列を格納
+                    //timeBox/dayにそれぞれEditActivityから受け取った設定時間の配列/曜日の文字列を格納
                     int timeBox[] = intent.getIntArrayExtra("return_times");
-                    // 配列の内容をListItemオブジェクトに詰め替え
+                    String day = intent.getStringExtra("chosen_day");
+                    // 配列/文字列の内容をListItemオブジェクトに詰め替え
                     ArrayList<ListItem> data = new ArrayList<>();
                     ListItem item = new ListItem();
                     item.setId((new Random()).nextLong());
                     item.setTimes(timeBox);
+                    item.setDay(day);
                     data.add(item);
                     adapter.setData(item);
                     break;

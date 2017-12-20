@@ -45,7 +45,7 @@ public class MyAdapter extends BaseAdapter {
                     .inflate(R.layout.list_item, null);
         }
         ((TextView) convertView.findViewById(R.id.setting_times)).setText(String.valueOf(item.getTimes()));
-
+        ((TextView) convertView.findViewById(R.id.setting_day)).setText(item.getDay());
         return convertView;
     }
 

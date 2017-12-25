@@ -58,5 +58,15 @@ public class MyAdapter extends BaseAdapter {
         this.data.add(data);
         notifyDataSetChanged();
     }
+
+    /**
+     * ListView項目の長押しで消去
+     *
+     * @param item 選択した項目
+     */
+    public void deleteData(ListItem item) {
+        this.data.remove(item);
+        notifyDataSetChanged();
+    }
 }
 

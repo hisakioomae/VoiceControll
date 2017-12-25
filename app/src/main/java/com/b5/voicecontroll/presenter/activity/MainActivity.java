@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.b5.voicecontroll.R;
@@ -22,11 +23,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ArrayList<ListItem> data = new ArrayList<>();
+        final ArrayList<ListItem> data = new ArrayList<>();
         adapter = new MyAdapter(this, data);
-        ListView list = findViewById(R.id.list_view);
+        final ListView list = findViewById(R.id.list_view);
         list.setAdapter(adapter);
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            /**
+             * @param parent ListView
+             * @param view 選択した項目
+             * @param position 選択した項目の添え字
+             * @param id 選択した項目のID
+             */
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ListView listView = (ListView) parent;
+                ListItem item = (ListItem) listView.getItemAtPosition(position);
+                adapter.deleteData(item);
+                return false;
+            }
+        });
     }
 
     @Override

@@ -17,6 +17,10 @@ public class ListItem {
         return day;
     }
 
+    public int[] getTimeBox(){
+        return times;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

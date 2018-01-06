@@ -12,13 +12,14 @@ import com.b5.voicecontroll.presenter.activity.adapter.MyAdapter;
 import com.b5.voicecontroll.presenter.entity.ListItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1;
     private MyAdapter adapter;
-
+    int times[] = {0, 0, 0, 0};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,22 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MyAdapter(this, data);
         final ListView list = findViewById(R.id.list_view);
         list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * @param parent ListView
+             * @param view 選択した項目
+             * @param position 選択した項目の添え字
+             * @param id 選択した項目のID
+             */
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListItem item = (ListItem) parent.getItemAtPosition(position);
+                times = item.getTimeBox();
+                timeEdit(view);
+            }
+        });
+
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             /**
              * @param parent ListView
@@ -36,12 +53,17 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ListView listView = (ListView) parent;
-                ListItem item = (ListItem) listView.getItemAtPosition(position);
+                ListItem item = (ListItem) parent.getItemAtPosition(position);
                 adapter.deleteData(item);
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        Arrays.fill(times,0);
     }
 
     @Override
@@ -72,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void timeEdit(View view) {
         Intent intent = new Intent(this, EditActivity.class);
+        intent.putExtra("edit_times", times);
         startActivityForResult(intent, REQUEST_CODE);
     }
 

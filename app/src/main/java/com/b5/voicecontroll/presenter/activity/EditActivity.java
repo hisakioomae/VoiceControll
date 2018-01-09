@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -16,10 +17,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
 public class EditActivity extends AppCompatActivity {
     private String setting_time;
     private int timeBox[] = new int[4];
-
+    int setHour, setMinute = 0;
     @BindView(R.id.start_time)
     TextView setStartTime;
     @BindView(R.id.end_time)
@@ -30,6 +32,10 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         ButterKnife.bind(this);
+        Intent intent = getIntent();
+        timeBox = intent.getIntArrayExtra("edit_times");
+        setStartTime.setText(timeBox[0] + ":" + timeBox[1]);
+        setEndTime.setText(timeBox[2] + ":" + timeBox[3]);
     }
 
     /**
@@ -49,6 +55,8 @@ public class EditActivity extends AppCompatActivity {
      */
     @OnClick(R.id.start_time)
     public void decideStartTimes(View view) {
+        setHour = timeBox[0];
+        setMinute = timeBox[1];
         setDialogTime(setStartTime, 0);
     }
 
@@ -59,6 +67,8 @@ public class EditActivity extends AppCompatActivity {
      */
     @OnClick(R.id.end_time)
     public void decideEndTimes(View view) {
+        setHour = timeBox[2];
+        setMinute = timeBox[3];
         setDialogTime(setEndTime, 1);
     }
 
@@ -95,8 +105,8 @@ public class EditActivity extends AppCompatActivity {
                         textView.setText(String.format(Locale.US, setting_time, hourOfDay, minute));
                     }
                 },
-                0,
-                0,
+                setHour,
+                setMinute,
                 true);
         timePick.show();
     }
@@ -109,8 +119,14 @@ public class EditActivity extends AppCompatActivity {
     @OnClick(R.id.save_button)
     public void returnSettingTime(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+
+        //days_spinnerオブジェクトから選択アイテムの取得
+        Spinner spinner = findViewById(R.id.days_spinner);
+        String item = (String) spinner.getSelectedItem();
         intent.putExtra("return_times", timeBox);
+        intent.putExtra("chosen_day", item);
         setResult(RESULT_OK, intent);
         finish();
     }
+
 }

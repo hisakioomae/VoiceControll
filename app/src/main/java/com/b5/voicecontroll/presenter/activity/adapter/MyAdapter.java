@@ -45,7 +45,7 @@ public class MyAdapter extends BaseAdapter {
                     .inflate(R.layout.list_item, null);
         }
         ((TextView) convertView.findViewById(R.id.setting_times)).setText(String.valueOf(item.getTimes()));
-
+        ((TextView) convertView.findViewById(R.id.setting_day)).setText(item.getDay());
         return convertView;
     }
 
@@ -56,6 +56,16 @@ public class MyAdapter extends BaseAdapter {
      */
     public void setData(ListItem data) {
         this.data.add(data);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * ListView項目の長押しで消去
+     *
+     * @param item 選択した項目
+     */
+    public void deleteData(ListItem item) {
+        this.data.remove(item);
         notifyDataSetChanged();
     }
 }

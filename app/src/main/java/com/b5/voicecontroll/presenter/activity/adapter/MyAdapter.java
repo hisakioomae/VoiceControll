@@ -14,26 +14,26 @@ import java.util.ArrayList;
 
 public class MyAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<ListItem> data = new ArrayList<>();
+    private ArrayList<ListItem> listData = new ArrayList<>();
 
     public MyAdapter(Context context, ArrayList<ListItem> data) {
         this.context = context;
-        this.data = data;
+        this.listData = data;
     }
 
     @Override
     public int getCount() {
-        return data.size();
+        return listData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        return listData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return data.get(position).getId();
+        return listData.get(position).getId();
     }
 
     @Override
@@ -52,10 +52,10 @@ public class MyAdapter extends BaseAdapter {
     /**
      * 設定時間保存時にListViewの更新
      *
-     * @param data ListItem型の新たに追加した設定時間
+     * @param addData ListItem型の新たに追加した設定時間
      */
-    public void setData(ListItem data) {
-        this.data.add(data);
+    public void setData(ListItem addData) {
+        this.listData.add(addData);
         notifyDataSetChanged();
     }
 
@@ -65,7 +65,18 @@ public class MyAdapter extends BaseAdapter {
      * @param item 選択した項目
      */
     public void deleteData(ListItem item) {
-        this.data.remove(item);
+        this.listData.remove(item);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 選択元の項目を編集した項目に置換
+     *
+     * @param position 選択した項目のListView内の位置
+     * @param editData 編集した項目
+     */
+    public void changeData(int position, ListItem editData) {
+        this.listData.set(position, editData);
         notifyDataSetChanged();
     }
 }

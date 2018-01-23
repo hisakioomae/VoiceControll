@@ -17,7 +17,7 @@ public class ListItem {
         return day;
     }
 
-    public int[] getTimeBox(){
+    public int[] getTimeBox() {
         return times;
     }
 

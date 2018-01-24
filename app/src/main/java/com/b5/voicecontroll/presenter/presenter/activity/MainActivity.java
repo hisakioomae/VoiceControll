@@ -1,4 +1,4 @@
-package com.b5.voicecontroll.presenter.activity;
+package com.b5.voicecontroll.presenter.presenter.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.b5.voicecontroll.R;
-import com.b5.voicecontroll.presenter.activity.adapter.MyAdapter;
-import com.b5.voicecontroll.presenter.entity.ListItem;
+import com.b5.voicecontroll.presenter.presenter.adapter.MyAdapter;
+import com.b5.voicecontroll.presenter.presenter.entity.ListItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,12 +77,10 @@ public class MainActivity extends AppCompatActivity {
                     int timeBox[] = intent.getIntArrayExtra("return_times");
                     String day = intent.getStringExtra("chosen_day");
                     // 配列/文字列の内容をListItemオブジェクトに詰め替え
-                    ArrayList<ListItem> data = new ArrayList<>();
                     ListItem item = new ListItem();
                     item.setId((new Random()).nextLong());
                     item.setTimes(timeBox);
                     item.setDay(day);
-                    data.add(item);
                     adapter.setData(item);
                     break;
                 }
@@ -91,12 +89,10 @@ public class MainActivity extends AppCompatActivity {
                     int position = intent.getIntExtra("list_position", 0);
                     int timeBox[] = intent.getIntArrayExtra("return_times");
                     String day = intent.getStringExtra("chosen_day");
-                    ArrayList<ListItem> dataList = new ArrayList<>();
                     ListItem item = new ListItem();
                     item.setId((new Random()).nextLong());
                     item.setTimes(timeBox);
                     item.setDay(day);
-                    dataList.add(item);
                     adapter.changeData(position, item);
                     break;
                 }

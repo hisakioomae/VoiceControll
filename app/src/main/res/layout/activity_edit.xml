@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="6"
-    tools:context="com.b5.voicecontroll.presenter.activity.EditActivity">
+    tools:context="com.b5.voicecontroll.presenter.presenter.activity.EditActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

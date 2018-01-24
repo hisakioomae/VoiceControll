@@ -1,4 +1,4 @@
-package com.b5.voicecontroll.presenter.activity;
+package com.b5.voicecontroll.presenter.presenter.activity;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.TimePicker;
 import java.util.Locale;
 
 import com.b5.voicecontroll.R;
+import com.b5.voicecontroll.presenter.presenter.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,8 +37,8 @@ public class EditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         timeBox = intent.getIntArrayExtra("edit_times");
         listPosition = intent.getIntExtra("list_position", 0);
-        setStartTime.setText(timeBox[0] + ":" + timeBox[1]);
-        setEndTime.setText(timeBox[2] + ":" + timeBox[3]);
+        setStartTime.setText(String.format(Locale.US,"%d:%d", timeBox[0],timeBox[1]));
+        setEndTime.setText(String.format(Locale.US,"%d:%d", timeBox[2],timeBox[3]));
     }
 
     /**

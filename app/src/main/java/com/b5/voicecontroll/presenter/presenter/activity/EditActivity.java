@@ -1,4 +1,4 @@
-package com.b5.voicecontroll.presenter.activity;
+package com.b5.voicecontroll.presenter.presenter.activity;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.TimePicker;
 import java.util.Locale;
 
 import com.b5.voicecontroll.R;
+import com.b5.voicecontroll.presenter.presenter.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +22,7 @@ import butterknife.OnClick;
 public class EditActivity extends AppCompatActivity {
     private String setting_time;
     private int timeBox[] = new int[4];
+    private int listPosition = 0;
     int setHour, setMinute = 0;
     @BindView(R.id.start_time)
     TextView setStartTime;
@@ -34,8 +36,9 @@ public class EditActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         timeBox = intent.getIntArrayExtra("edit_times");
-        setStartTime.setText(timeBox[0] + ":" + timeBox[1]);
-        setEndTime.setText(timeBox[2] + ":" + timeBox[3]);
+        listPosition = intent.getIntExtra("list_position", 0);
+        setStartTime.setText(String.format(Locale.US,"%d:%d", timeBox[0],timeBox[1]));
+        setEndTime.setText(String.format(Locale.US,"%d:%d", timeBox[2],timeBox[3]));
     }
 
     /**
@@ -125,6 +128,7 @@ public class EditActivity extends AppCompatActivity {
         String item = (String) spinner.getSelectedItem();
         intent.putExtra("return_times", timeBox);
         intent.putExtra("chosen_day", item);
+        intent.putExtra("list_position", listPosition);
         setResult(RESULT_OK, intent);
         finish();
     }

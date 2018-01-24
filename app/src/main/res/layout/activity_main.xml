@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.b5.voicecontroll.presenter.activity.MainActivity">
+    tools:context="com.b5.voicecontroll.presenter.presenter.activity.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="timeEdit"
+            android:onClick="timeAdd"
             android:text="@string/edit_text" />
 
         <TextView
@@ -39,6 +39,6 @@
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

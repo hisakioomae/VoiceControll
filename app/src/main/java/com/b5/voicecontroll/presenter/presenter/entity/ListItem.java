@@ -1,4 +1,4 @@
-package com.b5.voicecontroll.presenter.entity;
+package com.b5.voicecontroll.presenter.presenter.entity;
 
 public class ListItem {
     private long id = 0;
@@ -17,7 +17,7 @@ public class ListItem {
         return day;
     }
 
-    public int[] getTimeBox(){
+    public int[] getTimeBox() {
         return times;
     }
 

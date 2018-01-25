@@ -1,29 +1,43 @@
 package com.b5.voicecontroll.presenter.presenter.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 
 import com.b5.voicecontroll.R;
 import com.b5.voicecontroll.presenter.presenter.adapter.MyAdapter;
 import com.b5.voicecontroll.presenter.presenter.entity.ListItem;
+import com.b5.voicecontroll.presenter.presenter.entity.TimeReceive;
+import com.b5.voicecontroll.presenter.presenter.fragment.AlertDialogFragment;  // TODO: Dialog追加予定
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final int ADD_CODE = 1;  //新規追加時のrequestCode
-    private static final int EDIT_CODE = 2;  //編集時のrequestCode
+    private static final int ADD_CODE = 1;  // 新規追加時のrequestCode
+    private static final int EDIT_CODE = 2;  // 編集時のrequestCode
+
+    // TODO: 追加予定ダイアログ用
+    private static final int FRAGMENT_CODE = 3;  // AlertDialog呼び出し時のrequestCode
+    private DialogFragment dialogFragment;
+    private FragmentManager fragmentManager;
+
     private MyAdapter adapter;
     int times[] = {0, 0, 0, 0};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ArrayList<ListItem> data = new ArrayList<>();
@@ -55,17 +69,28 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //　TODO:確認用ダイアログ追加予定
+                //dialogFragment = new  AlertDialogFragment();
+                //fragmentManager = getSupportFragmentManager();
+                // 消去確認ダイアログの表示
+//                dialogFragment.show(fragmentManager, "test alert dialog");
+
                 ListItem item = (ListItem) parent.getItemAtPosition(position);
                 adapter.deleteData(item);
-                return false;
+                return true;
             }
         });
+        sendTimeProcess();  // ListViewに格納されている時間で処理を行うように設定
     }
+
+
+
 
     @Override
     public void onRestart() {
         super.onRestart();
         Arrays.fill(times, 0);
+
     }
 
     @Override
@@ -97,9 +122,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
         }
-
-
     }
+
 
     /**
      * 編集ボタンタップでEditActivityに遷移
@@ -122,6 +146,22 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("edit_times", times);
         intent.putExtra("list_position", position);
         startActivityForResult(intent, EDIT_CODE);
+    }
+
+    /**
+     * TimeReceiveクラスのインテントを作成しAlarmManagerに設定時刻を登録
+     */
+    public void sendTimeProcess(){
+        Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
+        PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis()); // 現在時刻を取得
+        System.out.println(calendar.HOUR_OF_DAY);
+        calendar.add(Calendar.SECOND, 5); // 現時刻より2秒後を設定
+
+        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
     }
 
 }

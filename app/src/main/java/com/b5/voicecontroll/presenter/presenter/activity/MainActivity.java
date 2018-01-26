@@ -2,6 +2,7 @@ package com.b5.voicecontroll.presenter.presenter.activity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MyAdapter(this, data);
         final ListView list = findViewById(R.id.list_view);
         list.setAdapter(adapter);
-
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             /**
              * @param parent ListView
@@ -80,16 +80,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        sendTimeProcess();  // ListViewに格納されている時間で処理を行うように設定
     }
-
-
 
 
     @Override
     public void onRestart() {
         super.onRestart();
         Arrays.fill(times, 0);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            sendTimeProcess(i);
+        }
 
     }
 
@@ -149,19 +149,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * TimeReceiveクラスのインテントを作成しAlarmManagerに設定時刻を登録
+     * AlarmManagerに設定時刻を登録
      */
-    public void sendTimeProcess(){
+    public void sendTimeProcess(int position) {
         Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
         PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis()); // 現在時刻を取得
-        System.out.println(calendar.HOUR_OF_DAY);
-        calendar.add(Calendar.SECOND, 5); // 現時刻より2秒後を設定
+        final ListView list = findViewById(R.id.list_view);
+        ListItem item = (ListItem) list.getItemAtPosition(position);
+        System.out.println(item.getTimeBox()[0]);
 
-        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        if ((calendar.get(Calendar.HOUR_OF_DAY) > item.getTimeBox()[0]) || ((calendar.get(Calendar.HOUR_OF_DAY) == item.getTimeBox()[0]) && (calendar.get(Calendar.MINUTE) < item.getTimeBox()[1]))) {
+            // 現時刻が設定時刻より前の場合、その日の時刻に設定
+            calendar.set(Calendar.HOUR_OF_DAY, item.getTimeBox()[0]);
+            calendar.set(Calendar.MINUTE, item.getTimeBox()[1]);
+        } else {
+            // 現時刻が設定時刻を過ぎている場合、次の日の時刻に設定
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            calendar.set(Calendar.HOUR_OF_DAY, item.getTimeBox()[0]);
+            calendar.set(Calendar.MINUTE, item.getTimeBox()[1]);
+        }
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        System.out.println(calendar.getTimeInMillis());
+        am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
     }
 
 }

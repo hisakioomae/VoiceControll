@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
 
         final ListView list = findViewById(R.id.list_view);
         ListItem item = (ListItem) list.getItemAtPosition(position);
-        System.out.println(item.getTimeBox()[0]);
 
         // 現在の時刻をcalendarにセット
         Calendar calendar = Calendar.getInstance();
@@ -178,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
         calendar.add(Calendar.SECOND, returnSecond(calendar, calendar_target));
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        System.out.println(calendar.getTimeInMillis());
         am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
     }
 
@@ -218,9 +216,6 @@ public class MainActivity extends AppCompatActivity {
                 hourDiff = 0;
             }
         }
-
-        // TODO: デバックで利用
-        System.out.println((hourDiff * 3600) + (minuteDiff * 60) - calendar.get(Calendar.SECOND) + "秒後");
 
         return (hourDiff * 3600) + (minuteDiff * 60) - calendar.get(Calendar.SECOND) - 2;
     }

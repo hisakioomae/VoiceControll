@@ -6,6 +6,6 @@ import android.widget.Toast;
 
 public class TimeReceive extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent){
-        Toast.makeText(context, "5秒後です", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "指定時間です", Toast.LENGTH_SHORT).show();
     }
 }

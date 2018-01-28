@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +16,10 @@ import com.b5.voicecontroll.R;
 import com.b5.voicecontroll.presenter.presenter.adapter.MyAdapter;
 import com.b5.voicecontroll.presenter.presenter.entity.ListItem;
 import com.b5.voicecontroll.presenter.presenter.entity.TimeReceive;
-import com.b5.voicecontroll.presenter.presenter.fragment.AlertDialogFragment;  // TODO: Dialog追加予定
+// TODO: Dialog追加予定
+import android.support.v4.app.Fragment;
+
+import com.b5.voicecontroll.presenter.presenter.fragment.AlertDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -149,31 +151,78 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * AlarmManagerに設定時刻を登録
+     * AlarmManagerに指定時間にTimeReceiveを処理するように登録
+     *
+     * @param position 設定時間のListViewの要素の位置
      */
     public void sendTimeProcess(int position) {
         Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
+        intent.setType(String.valueOf(position));
         PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
 
         final ListView list = findViewById(R.id.list_view);
         ListItem item = (ListItem) list.getItemAtPosition(position);
         System.out.println(item.getTimeBox()[0]);
 
+        // 現在の時刻をcalendarにセット
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        if ((calendar.get(Calendar.HOUR_OF_DAY) > item.getTimeBox()[0]) || ((calendar.get(Calendar.HOUR_OF_DAY) == item.getTimeBox()[0]) && (calendar.get(Calendar.MINUTE) < item.getTimeBox()[1]))) {
-            // 現時刻が設定時刻より前の場合、その日の時刻に設定
-            calendar.set(Calendar.HOUR_OF_DAY, item.getTimeBox()[0]);
-            calendar.set(Calendar.MINUTE, item.getTimeBox()[1]);
-        } else {
-            // 現時刻が設定時刻を過ぎている場合、次の日の時刻に設定
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-            calendar.set(Calendar.HOUR_OF_DAY, item.getTimeBox()[0]);
-            calendar.set(Calendar.MINUTE, item.getTimeBox()[1]);
-        }
+
+        // ターゲット時刻をcalendar_targetにセット
+        Calendar calendar_target = Calendar.getInstance();
+        calendar_target.setTimeInMillis(System.currentTimeMillis());
+        calendar_target.set(Calendar.HOUR_OF_DAY, item.getTimeBox()[0]);
+        calendar_target.set(Calendar.MINUTE, item.getTimeBox()[1]);
+
+        // ターゲット時刻が何秒後かを追加
+        calendar.add(Calendar.SECOND, returnSecond(calendar, calendar_target));
+
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         System.out.println(calendar.getTimeInMillis());
         am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+    }
+
+    /**
+     * 設定時刻までの時間情報をSECONDフィールドに変換する
+     *
+     * @param calendar        現在の時間情報を含んだCalendar型変数
+     * @param calendar_target 設定時間の情報を含んだCalendar型変数
+     * @return 設定時刻までの秒数
+     */
+    public int returnSecond(Calendar calendar, Calendar calendar_target) {
+        int hourDiff = Math.abs(calendar_target.get(Calendar.HOUR_OF_DAY) - calendar.get(Calendar.HOUR_OF_DAY));
+        int minuteDiff = Math.abs(calendar_target.get(Calendar.MINUTE) - calendar.get(Calendar.MINUTE));
+
+        // 設定時間のHOURがまだきていない時
+        if (calendar.get(Calendar.HOUR) > calendar_target.get(Calendar.HOUR)) {
+            if (calendar.get(Calendar.MINUTE) > calendar_target.get(Calendar.MINUTE)) {
+                // MINUTEの繰り上がりを考慮
+                minuteDiff = -(minuteDiff);
+            }
+        }
+        // 過ぎている場合、１日後に設定
+        else if (calendar.get(Calendar.HOUR) < calendar_target.get(Calendar.HOUR)) {
+            hourDiff = 24 - hourDiff;
+            if (calendar.get(Calendar.MINUTE) > calendar_target.get(Calendar.MINUTE)) {
+                // MINUTEの繰り上がりを考慮
+                minuteDiff = -(minuteDiff);
+            }
+        }
+        // 同じ値の時
+        else {
+            if (calendar.get(Calendar.MINUTE) >= calendar_target.get(Calendar.MINUTE)) {
+                hourDiff = 24;
+                // MINUTEの繰り上がりを考慮
+                minuteDiff = -(minuteDiff);
+            } else {
+                hourDiff = 0;
+            }
+        }
+
+        // TODO: デバックで利用
+        System.out.println((hourDiff * 3600) + (minuteDiff * 60) - calendar.get(Calendar.SECOND) + "秒後");
+
+        return (hourDiff * 3600) + (minuteDiff * 60) - calendar.get(Calendar.SECOND) - 2;
     }
 
 }

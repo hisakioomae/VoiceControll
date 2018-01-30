@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        redisplayList(); // アプリを閉じる前のデータを再表示
     }
 
 
@@ -89,10 +91,13 @@ public class MainActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         Arrays.fill(times, 0);
-        for (int i = 0; i < adapter.getCount(); i++) {
-            sendTimeProcess(i);
-        }
+        setListTimes(); // 編集画面から戻ってくるたびにAlarmをセット
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveListData(); // 終了時にListViewの中身を保存
     }
 
     @Override
@@ -148,6 +153,16 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("edit_times", times);
         intent.putExtra("list_position", position);
         startActivityForResult(intent, EDIT_CODE);
+    }
+
+    /**
+     * ListViewの内容をsendTimeProcess関数に飛ばす
+     */
+    public void setListTimes() {
+        for (int i = 0; i < adapter.getCount(); i++) {
+            sendTimeProcess(i);
+        }
+
     }
 
     /**
@@ -218,6 +233,42 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return (hourDiff * 3600) + (minuteDiff * 60) - calendar.get(Calendar.SECOND) - 2;
+    }
+
+    /**
+     * ListViewのデータを保存する
+     */
+    public void saveListData() {
+        SharedPreferences dataSave = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = dataSave.edit();
+        final ListView list = findViewById(R.id.list_view);
+        editor.putInt("DataCount", adapter.getCount());
+        for (int i = 0; i < adapter.getCount(); i++) {
+            ListItem item = (ListItem) list.getItemAtPosition(i);
+            editor.putInt("SaveData1" + i, item.getTimeBox()[0]);
+            editor.putInt("SaveData2" + i, item.getTimeBox()[1]);
+            editor.putInt("SaveData3" + i, item.getTimeBox()[2]);
+            editor.putInt("SaveData4" + i, item.getTimeBox()[3]);
+            editor.putString("SaveDay" + i, item.getDay());
+        }
+        editor.apply();
+    }
+
+    /**
+     * SharedPreferences型変数で格納しているListViewデータを再表示
+     */
+    public void redisplayList() {
+        SharedPreferences dataSave = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        int DataCount = dataSave.getInt("DataCount", 0);
+        System.out.println(DataCount);
+        for (int i = 0; i < DataCount; i++) {
+            int timeBox[] = {dataSave.getInt("SaveData1" + i, 0), dataSave.getInt("SaveData2" + i, 0), dataSave.getInt("SaveData3" + i, 0), dataSave.getInt("SaveData4" + i, 0)};
+            ListItem item = new ListItem();
+            item.setId((new Random()).nextLong());
+            item.setTimes(timeBox);
+            item.setDay(dataSave.getString("SaveDay" + i, "しない"));
+            adapter.setData(item);
+        }
     }
 
 }

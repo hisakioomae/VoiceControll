@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 //fragmentManager = getSupportFragmentManager();
                 // 消去確認ダイアログの表示
 //                dialogFragment.show(fragmentManager, "test alert dialog");
-
                 ListItem item = (ListItem) parent.getItemAtPosition(position);
                 adapter.deleteData(item);
+                clearAlarm(item.getId());
                 return true;
             }
         });
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         Arrays.fill(times, 0);
-        setListTimes(); // 編集画面から戻ってくるたびにAlarmをセット
     }
 
     @Override
@@ -114,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     item.setTimes(timeBox);
                     item.setDay(day);
                     adapter.setData(item);
+                    sendTimeProcess(adapter.getCount() - 1);
                     break;
                 }
             case (EDIT_CODE):
@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     item.setTimes(timeBox);
                     item.setDay(day);
                     adapter.changeData(position, item);
+                    sendTimeProcess(position); // 編集画面から戻ってくるたびにAlarmをセット
                     break;
                 }
         }
@@ -156,27 +157,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * ListViewの内容をsendTimeProcess関数に飛ばす
-     */
-    public void setListTimes() {
-        for (int i = 0; i < adapter.getCount(); i++) {
-            sendTimeProcess(i);
-        }
-
-    }
-
-    /**
      * AlarmManagerに指定時間にTimeReceiveを処理するように登録
      *
      * @param position 設定時間のListViewの要素の位置
      */
     public void sendTimeProcess(int position) {
-        Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
-        intent.setType(String.valueOf(position));
-        PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
-
         final ListView list = findViewById(R.id.list_view);
         ListItem item = (ListItem) list.getItemAtPosition(position);
+
+        Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
+        intent.setType(String.valueOf(item.getId()));
+        PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+
 
         // 現在の時刻をcalendarにセット
         Calendar calendar = Calendar.getInstance();
@@ -193,6 +185,15 @@ public class MainActivity extends AppCompatActivity {
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+    }
+
+    public void clearAlarm(long id) {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
+        intent.setType(String.valueOf(id));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+        pendingIntent.cancel();
+        am.cancel(pendingIntent);
     }
 
     /**
@@ -245,11 +246,13 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("DataCount", adapter.getCount());
         for (int i = 0; i < adapter.getCount(); i++) {
             ListItem item = (ListItem) list.getItemAtPosition(i);
-            editor.putInt("SaveData1" + i, item.getTimeBox()[0]);
-            editor.putInt("SaveData2" + i, item.getTimeBox()[1]);
-            editor.putInt("SaveData3" + i, item.getTimeBox()[2]);
-            editor.putInt("SaveData4" + i, item.getTimeBox()[3]);
-            editor.putString("SaveDay" + i, item.getDay());
+            long id = item.getId();
+            editor.putLong("SaveID" + i, id);
+            editor.putInt("SaveData1" + id, item.getTimeBox()[0]);
+            editor.putInt("SaveData2" + id, item.getTimeBox()[1]);
+            editor.putInt("SaveData3" + id, item.getTimeBox()[2]);
+            editor.putInt("SaveData4" + id, item.getTimeBox()[3]);
+            editor.putString("SaveDay" + id, item.getDay());
         }
         editor.apply();
     }
@@ -259,16 +262,18 @@ public class MainActivity extends AppCompatActivity {
      */
     public void redisplayList() {
         SharedPreferences dataSave = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = dataSave.edit();
         int DataCount = dataSave.getInt("DataCount", 0);
-        System.out.println(DataCount);
         for (int i = 0; i < DataCount; i++) {
-            int timeBox[] = {dataSave.getInt("SaveData1" + i, 0), dataSave.getInt("SaveData2" + i, 0), dataSave.getInt("SaveData3" + i, 0), dataSave.getInt("SaveData4" + i, 0)};
+            Long id = dataSave.getLong("SaveID" + i, 0);
+            int timeBox[] = {dataSave.getInt("SaveData1" + id, 0), dataSave.getInt("SaveData2" + id, 0), dataSave.getInt("SaveData3" + id, 0), dataSave.getInt("SaveData4" + id, 0)};
             ListItem item = new ListItem();
-            item.setId((new Random()).nextLong());
+            item.setId(id);
             item.setTimes(timeBox);
-            item.setDay(dataSave.getString("SaveDay" + i, "しない"));
+            item.setDay(dataSave.getString("SaveDay" + id, "しない"));
             adapter.setData(item);
         }
+        editor.clear();
     }
 
 }

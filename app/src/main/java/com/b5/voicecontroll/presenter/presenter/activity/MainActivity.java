@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.b5.voicecontroll.presenter.presenter.entity.TimeReceive;
 import android.support.v4.app.Fragment;
 
 import com.b5.voicecontroll.presenter.presenter.fragment.AlertDialogFragment;
+import com.b5.voicecontroll.presenter.presenter.service.AudioService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +33,8 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     private static final int ADD_CODE = 1;  // 新規追加時のrequestCode
     private static final int EDIT_CODE = 2;  // 編集時のrequestCode
+
+    private static MainActivity MainInstance;
 
     // TODO: 追加予定ダイアログ用
     private static final int FRAGMENT_CODE = 3;  // AlertDialog呼び出し時のrequestCode
@@ -76,23 +81,25 @@ public class MainActivity extends AppCompatActivity {
                 //fragmentManager = getSupportFragmentManager();
                 // 消去確認ダイアログの表示
 //                dialogFragment.show(fragmentManager, "test alert dialog");
-
                 ListItem item = (ListItem) parent.getItemAtPosition(position);
                 adapter.deleteData(item);
+                clearAlarm(item.getId());
                 return true;
             }
         });
+        redisplayList(); // アプリを閉じる前のデータを再表示
     }
-
 
     @Override
     public void onRestart() {
         super.onRestart();
         Arrays.fill(times, 0);
-        for (int i = 0; i < adapter.getCount(); i++) {
-            sendTimeProcess(i);
-        }
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveListData(); // 終了時にListViewの中身を保存
     }
 
     @Override
@@ -109,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     item.setTimes(timeBox);
                     item.setDay(day);
                     adapter.setData(item);
+                    sendTimeProcess(adapter.getCount() - 1);
                     break;
                 }
             case (EDIT_CODE):
@@ -121,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     item.setTimes(timeBox);
                     item.setDay(day);
                     adapter.changeData(position, item);
+                    sendTimeProcess(position); // 編集画面から戻ってくるたびにAlarmをセット
                     break;
                 }
         }
@@ -156,12 +165,13 @@ public class MainActivity extends AppCompatActivity {
      * @param position 設定時間のListViewの要素の位置
      */
     public void sendTimeProcess(int position) {
-        Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
-        intent.setType(String.valueOf(position));
-        PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
-
         final ListView list = findViewById(R.id.list_view);
         ListItem item = (ListItem) list.getItemAtPosition(position);
+
+        Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
+        intent.setType(String.valueOf(item.getId()));
+        PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+
 
         // 現在の時刻をcalendarにセット
         Calendar calendar = Calendar.getInstance();
@@ -178,6 +188,20 @@ public class MainActivity extends AppCompatActivity {
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+    }
+
+    /**
+     * 消去されたListView項目のIDでアラームに登録されている情報の消去
+     *
+     * @param id 消去したListView項目のID
+     */
+    public void clearAlarm(long id) {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
+        intent.setType(String.valueOf(id));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+        pendingIntent.cancel();
+        am.cancel(pendingIntent);
     }
 
     /**
@@ -219,5 +243,46 @@ public class MainActivity extends AppCompatActivity {
 
         return (hourDiff * 3600) + (minuteDiff * 60) - calendar.get(Calendar.SECOND) - 2;
     }
+
+    /**
+     * ListViewのデータを保存する
+     */
+    public void saveListData() {
+        SharedPreferences dataSave = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = dataSave.edit();
+        final ListView list = findViewById(R.id.list_view);
+        editor.putInt("DataCount", adapter.getCount());
+        for (int i = 0; i < adapter.getCount(); i++) {
+            ListItem item = (ListItem) list.getItemAtPosition(i);
+            long id = item.getId();
+            editor.putLong("SaveID" + i, id);
+            editor.putInt("SaveData1" + id, item.getTimeBox()[0]);
+            editor.putInt("SaveData2" + id, item.getTimeBox()[1]);
+            editor.putInt("SaveData3" + id, item.getTimeBox()[2]);
+            editor.putInt("SaveData4" + id, item.getTimeBox()[3]);
+            editor.putString("SaveDay" + id, item.getDay());
+        }
+        editor.apply();
+    }
+
+    /**
+     * SharedPreferences型変数で格納しているListViewデータを再表示
+     */
+    public void redisplayList() {
+        SharedPreferences dataSave = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = dataSave.edit();
+        int DataCount = dataSave.getInt("DataCount", 0);
+        for (int i = 0; i < DataCount; i++) {
+            Long id = dataSave.getLong("SaveID" + i, 0);
+            int timeBox[] = {dataSave.getInt("SaveData1" + id, 0), dataSave.getInt("SaveData2" + id, 0), dataSave.getInt("SaveData3" + id, 0), dataSave.getInt("SaveData4" + id, 0)};
+            ListItem item = new ListItem();
+            item.setId(id);
+            item.setTimes(timeBox);
+            item.setDay(dataSave.getString("SaveDay" + id, "しない"));
+            adapter.setData(item);
+        }
+        editor.clear();
+    }
+
 
 }

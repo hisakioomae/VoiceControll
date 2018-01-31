@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.b5.voicecontroll.presenter.presenter.entity.TimeReceive;
 import android.support.v4.app.Fragment;
 
 import com.b5.voicecontroll.presenter.presenter.fragment.AlertDialogFragment;
+import com.b5.voicecontroll.presenter.presenter.service.AudioService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +33,8 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     private static final int ADD_CODE = 1;  // 新規追加時のrequestCode
     private static final int EDIT_CODE = 2;  // 編集時のrequestCode
+
+    private static MainActivity MainInstance;
 
     // TODO: 追加予定ダイアログ用
     private static final int FRAGMENT_CODE = 3;  // AlertDialog呼び出し時のrequestCode
@@ -85,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         });
         redisplayList(); // アプリを閉じる前のデータを再表示
     }
-
 
     @Override
     public void onRestart() {
@@ -187,6 +190,11 @@ public class MainActivity extends AppCompatActivity {
         am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
     }
 
+    /**
+     * 消去されたListView項目のIDでアラームに登録されている情報の消去
+     *
+     * @param id 消去したListView項目のID
+     */
     public void clearAlarm(long id) {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), TimeReceive.class);
@@ -275,5 +283,6 @@ public class MainActivity extends AppCompatActivity {
         }
         editor.clear();
     }
+
 
 }

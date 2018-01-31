@@ -37,8 +37,8 @@ public class EditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         timeBox = intent.getIntArrayExtra("edit_times");
         listPosition = intent.getIntExtra("list_position", 0);
-        setStartTime.setText(String.format(Locale.US,"%d:%d", timeBox[0],timeBox[1]));
-        setEndTime.setText(String.format(Locale.US,"%d:%d", timeBox[2],timeBox[3]));
+        setStartTime.setText(String.format(Locale.US, "%d:%d", timeBox[0], timeBox[1]));
+        setEndTime.setText(String.format(Locale.US, "%d:%d", timeBox[2], timeBox[3]));
     }
 
     /**

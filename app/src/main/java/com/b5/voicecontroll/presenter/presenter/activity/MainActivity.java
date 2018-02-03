@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
 
     private MyAdapter adapter;
-    int times[] = {0, 0, 0, 0};
+    int times[] = {0, 0};
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -258,8 +258,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putLong("SaveID" + i, id);
             editor.putInt("SaveData1" + id, item.getTimeBox()[0]);
             editor.putInt("SaveData2" + id, item.getTimeBox()[1]);
-            editor.putInt("SaveData3" + id, item.getTimeBox()[2]);
-            editor.putInt("SaveData4" + id, item.getTimeBox()[3]);
             editor.putString("SaveDay" + id, item.getDay());
         }
         editor.apply();
@@ -274,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
         int DataCount = dataSave.getInt("DataCount", 0);
         for (int i = 0; i < DataCount; i++) {
             Long id = dataSave.getLong("SaveID" + i, 0);
-            int timeBox[] = {dataSave.getInt("SaveData1" + id, 0), dataSave.getInt("SaveData2" + id, 0), dataSave.getInt("SaveData3" + id, 0), dataSave.getInt("SaveData4" + id, 0)};
+            int timeBox[] = {dataSave.getInt("SaveData1" + id, 0), dataSave.getInt("SaveData2" + id, 0)};
             ListItem item = new ListItem();
             item.setId(id);
             item.setTimes(timeBox);

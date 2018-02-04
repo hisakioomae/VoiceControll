@@ -13,13 +13,13 @@ public class ListItem {
         String timeText;
         if (times[1] < 10) {
             // 時と分を文字列として結合
-            timeText = times[0] + "時" + "0" + times[1] + "分";
+            timeText = "  " + times[0] + "時" + "0" + times[1] + "分";
         } else {
             timeText = times[0] + "時" + times[1] + "分";
         }
         if (times[0] < 10) {
             // 表示時のズレ解消のため
-            timeText = "  " + times[0] + "時" + "0" + times[1] + "分";
+            timeText = "  " + timeText;
         }
         return timeText;
     }

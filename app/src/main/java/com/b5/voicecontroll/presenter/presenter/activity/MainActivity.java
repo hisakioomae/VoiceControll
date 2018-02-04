@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case (ADD_CODE):
                 if (resultCode == RESULT_OK) {
-                    //timeBox/dayにそれぞれEditActivityから受け取った設定時間の配列/曜日の文字列を格納
+                    // timeBox/dayにそれぞれEditActivityから受け取った設定時間の配列/曜日の文字列を格納
                     int timeBox[] = intent.getIntArrayExtra("return_times");
                     String day = intent.getStringExtra("chosen_day");
                     // 配列/文字列の内容をListItemオブジェクトに詰め替え
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
      * ListViewの項目タップで編集画面(EditActivity)に遷移
      *
      * @param position タップした項目の位置
-     * @param day 項目の指定曜日
+     * @param day      項目の指定曜日
      */
     public void timeEdit(int position, String day) {
         Intent intent = new Intent(this, EditActivity.class);

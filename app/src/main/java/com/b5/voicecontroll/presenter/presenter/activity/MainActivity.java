@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
     public void timeAdd(View view) {
         Intent intent = new Intent(this, EditActivity.class);
         intent.putExtra("edit_times", times);
+        intent.putExtra("select_day", "しない");
         startActivityForResult(intent, ADD_CODE);
     }
 

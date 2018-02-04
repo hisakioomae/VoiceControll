@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ListItem item = (ListItem) parent.getItemAtPosition(position);
                 times = item.getTimeBox();
-                timeEdit(position);
+                String day = item.getDay();
+                timeEdit(position, day);
             }
         });
 
@@ -148,13 +149,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * ListViewの項目長押しでで編集画面(EditActivity)に遷移
+     * ListViewの項目タップで編集画面(EditActivity)に遷移
      *
-     * @param position 長押しした項目の位置
+     * @param position タップした項目の位置
+     * @param day 項目の指定曜日
      */
-    public void timeEdit(int position) {
+    public void timeEdit(int position, String day) {
         Intent intent = new Intent(this, EditActivity.class);
         intent.putExtra("edit_times", times);
+        System.out.println("main: " + day);
+        intent.putExtra("select_day", day);
         intent.putExtra("list_position", position);
         startActivityForResult(intent, EDIT_CODE);
     }

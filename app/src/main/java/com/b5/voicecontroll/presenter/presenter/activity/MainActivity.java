@@ -255,7 +255,11 @@ public class MainActivity extends AppCompatActivity {
                 hourDiff = 0;
             }
         }
-        return ((dayDiff - 1) * 86400) + (hourDiff * 3600) + (minuteDiff * 60) - calendar.get(Calendar.SECOND) - 2;
+
+        int diffSecond = ((dayDiff * 86400) + (hourDiff * 3600) + (minuteDiff * 60) - calendar.get(Calendar.SECOND) - 2);
+
+        System.out.println(diffSecond);
+        return diffSecond;
     }
 
     /**

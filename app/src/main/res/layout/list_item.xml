@@ -37,7 +37,13 @@
             android:text="New Text"
             android:textSize="20sp" />
         </LinearLayout>
-        
+
+        <Space
+            android:id="@+id/space_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="16" />
+
         <ToggleButton
             android:id="@+id/toggle_button"
             android:layout_width="wrap_content"

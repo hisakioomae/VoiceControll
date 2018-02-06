@@ -2,7 +2,7 @@ package com.b5.voicecontroll.presenter.presenter.entity;
 
 public class ListItem {
     private long id = 0;
-    private int times[] = new int[4];
+    private int times[] = new int[2];
     private String day;
 
     public long getId() {
@@ -10,7 +10,18 @@ public class ListItem {
     }
 
     public String getTimes() {
-        return times[0] + "時" + times[1] + "分" + "～" + times[2] + "時" + times[3] + "分";
+        String timeText;
+        if (times[1] < 10) {
+            // 時と分を文字列として結合
+            timeText = "  " + times[0] + "時" + "0" + times[1] + "分";
+        } else {
+            timeText = times[0] + "時" + times[1] + "分";
+        }
+        if (times[0] < 10) {
+            // 表示時のズレ解消のため
+            timeText = "  " + timeText;
+        }
+        return timeText;
     }
 
     public String getDay() {

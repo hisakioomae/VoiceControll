@@ -2,26 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <Space
+            android:id="@+id/space_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
 
         <TextView
             android:id="@+id/setting_times"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="8"
             android:text="New Text"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/setting_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:text="New Text"
             android:textSize="20sp" />
+
+        <ToggleButton
+            android:id="@+id/toggle_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" />
 
     </LinearLayout>
 </LinearLayout>

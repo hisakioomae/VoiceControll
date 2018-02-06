@@ -21,13 +21,11 @@ import butterknife.OnClick;
 
 public class EditActivity extends AppCompatActivity {
     private String setting_time;
-    private int timeBox[] = new int[4];
+    private int timeBox[] = new int[2];
     private int listPosition = 0;
     int setHour, setMinute = 0;
     @BindView(R.id.start_time)
     TextView setStartTime;
-    @BindView(R.id.end_time)
-    TextView setEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +35,14 @@ public class EditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         timeBox = intent.getIntArrayExtra("edit_times");
         listPosition = intent.getIntExtra("list_position", 0);
-        setStartTime.setText(String.format(Locale.US, "%d:%d", timeBox[0], timeBox[1]));
-        setEndTime.setText(String.format(Locale.US, "%d:%d", timeBox[2], timeBox[3]));
+        Spinner spinner = findViewById(R.id.days_spinner);
+        spinner.setSelection(setSpinner(intent.getStringExtra("select_day")));
+        if (timeBox[1] < 10) {
+            // 時と分を文字列として結合
+            setStartTime.setText(String.format(Locale.US, "%d:0%d", timeBox[0], timeBox[1]));
+        } else {
+            setStartTime.setText(String.format(Locale.US, "%d:%d", timeBox[0], timeBox[1]));
+        }
     }
 
     /**
@@ -64,18 +68,6 @@ public class EditActivity extends AppCompatActivity {
     }
 
     /**
-     * 終了時間のテキストをタップで時間ダイアログを表示
-     *
-     * @param view activity_edit.xml
-     */
-    @OnClick(R.id.end_time)
-    public void decideEndTimes(View view) {
-        setHour = timeBox[2];
-        setMinute = timeBox[3];
-        setDialogTime(setEndTime, 1);
-    }
-
-    /**
      * 時間ダイアログで設定した時間を各textViewに反映
      *
      * @param textView 反映させるTextView
@@ -87,17 +79,10 @@ public class EditActivity extends AppCompatActivity {
                 new TimePickerDialog.OnTimeSetListener() {
                     public void onTimeSet(TimePicker view,
                                           int hourOfDay, int minute) {// 設定 ボタンクリック時の処理
-                        // timeBoxに開始/終了時間を格納
-                        switch (flag) {
-                            case (0):
-                                timeBox[0] = hourOfDay;
-                                timeBox[1] = minute;
-                                break;
-                            case (1):
-                                timeBox[2] = hourOfDay;
-                                timeBox[3] = minute;
-                                break;
-                        }
+                        // timeBoxに開始時間を格納
+                        timeBox[0] = hourOfDay;
+                        timeBox[1] = minute;
+
                         if (minute < 10) {
                             // 時と分を文字列として結合
                             setting_time = "%d時 0%d分";
@@ -131,6 +116,31 @@ public class EditActivity extends AppCompatActivity {
         intent.putExtra("list_position", listPosition);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    /**
+     * Spinnerの初期値を設定
+     *
+     * @param day 　編集するListViewに現在選択されている繰り返し項目
+     */
+    public int setSpinner(String day) {
+        int index = 0;
+        if (day.equals("日曜日")) {
+            index = 1;
+        } else if (day.equals("月曜日")) {
+            index = 2;
+        } else if (day.equals("火曜日")) {
+            index = 3;
+        } else if (day.equals("水曜日")) {
+            index = 4;
+        } else if (day.equals("木曜日")) {
+            index = 5;
+        } else if (day.equals("金曜日")) {
+            index = 6;
+        } else if (day.equals("土曜日")) {
+            index = 7;
+        }
+        return index;
     }
 
 }

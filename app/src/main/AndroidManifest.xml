@@ -14,12 +14,10 @@
         <activity android:name=".presenter.presenter.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".presenter.presenter.activity.EditActivity"></activity>
-
         <receiver
             android:name=".presenter.presenter.entity.TimeReceive"
             android:process=":remote" />

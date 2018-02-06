@@ -21,6 +21,7 @@ import com.b5.voicecontroll.presenter.presenter.entity.ListItem;
 import com.b5.voicecontroll.presenter.presenter.entity.TimeReceive;
 // TODO: Dialog追加予定
 import android.support.v4.app.Fragment;
+import android.widget.Switch;
 
 import com.b5.voicecontroll.presenter.presenter.fragment.AlertDialogFragment;
 import com.b5.voicecontroll.presenter.presenter.service.AudioService;
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int FRAGMENT_CODE = 3;  // AlertDialog呼び出し時のrequestCode
     private DialogFragment dialogFragment;
     private FragmentManager fragmentManager;
-
     private MyAdapter adapter;
     int times[] = {0, 0};
 

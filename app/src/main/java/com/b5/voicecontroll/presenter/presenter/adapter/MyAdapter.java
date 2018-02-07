@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -49,6 +50,10 @@ public class MyAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.setting_day)).setText(item.getDay());
         Switch swt = convertView.findViewById(R.id.list_switch);
         swt.setTag(position);
+        swt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+            }
+        });
         return convertView;
     }
 

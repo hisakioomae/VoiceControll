@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -46,14 +47,28 @@ public class MyAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        View holder;
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        ViewHolder holder;
         Activity activity = (Activity) context;
         ListItem item = (ListItem) getItem(position);
         if (convertView == null) {
             convertView = activity.getLayoutInflater()
                     .inflate(R.layout.list_item, null);
+            holder = new ViewHolder();
+            holder.timeText = convertView.findViewById(R.id.setting_times);
+            holder.dayText = convertView.findViewById(R.id.setting_day);
+            holder.swt = convertView.findViewById(R.id.list_switch);
+        }else {
+            holder = (ViewHolder) convertView.getTag();
         }
+
+        holder.swt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ListView) parent).performItemClick(view, position, R.id.list_switch);
+            }
+        });
+        
         ((TextView) convertView.findViewById(R.id.setting_times)).setText(String.valueOf(item.getTimes()));
         ((TextView) convertView.findViewById(R.id.setting_day)).setText(item.getDay());
         return convertView;

@@ -10,6 +10,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.b5.voicecontroll.R;
+import com.b5.voicecontroll.presenter.presenter.activity.MainActivity;
 import com.b5.voicecontroll.presenter.presenter.entity.ListItem;
 
 import java.util.ArrayList;
@@ -21,6 +22,12 @@ public class MyAdapter extends BaseAdapter {
     public MyAdapter(Context context, ArrayList<ListItem> data) {
         this.context = context;
         this.listData = data;
+    }
+
+    static class ViewHolder {
+        TextView timeText;
+        TextView dayText;
+        Switch swt;
     }
 
     @Override
@@ -39,7 +46,8 @@ public class MyAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        View holder;
         Activity activity = (Activity) context;
         ListItem item = (ListItem) getItem(position);
         if (convertView == null) {
@@ -48,17 +56,6 @@ public class MyAdapter extends BaseAdapter {
         }
         ((TextView) convertView.findViewById(R.id.setting_times)).setText(String.valueOf(item.getTimes()));
         ((TextView) convertView.findViewById(R.id.setting_day)).setText(item.getDay());
-        Switch swt = convertView.findViewById(R.id.list_switch);
-        swt.setTag(position);
-        swt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
-                if (isChecked == true){
-
-                } else{
-                    
-                }
-            }
-        });
         return convertView;
     }
 

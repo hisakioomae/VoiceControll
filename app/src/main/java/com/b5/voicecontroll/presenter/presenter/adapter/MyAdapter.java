@@ -52,6 +52,11 @@ public class MyAdapter extends BaseAdapter {
         swt.setTag(position);
         swt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+                if (isChecked == true){
+
+                } else{
+                    
+                }
             }
         });
         return convertView;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.b5.voicecontroll.R;
@@ -46,6 +47,8 @@ public class MyAdapter extends BaseAdapter {
         }
         ((TextView) convertView.findViewById(R.id.setting_times)).setText(String.valueOf(item.getTimes()));
         ((TextView) convertView.findViewById(R.id.setting_day)).setText(item.getDay());
+        Switch swt = convertView.findViewById(R.id.list_switch);
+        swt.setTag(position);
         return convertView;
     }
 
